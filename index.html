@@ -1,0 +1,577 @@
+<html>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<header><title>LITCAVE</title></header>
+<body>
+<h1>LITCAVE</h1>
+<p>
+Most of the programs listed in this page were written to
+address my own concerns and for my own amusement.
+Nonetheless, I wish others find them of service or interesting.
+The most popular of these programs are probably
+<a href="neatroff.pdf">Neatroff</a>, <a href="neatcc.pdf">Neatcc</a>,
+<a href="https://github.com/aligrudi/neatvi">Neatvi</a>,
+and <a href="https://github.com/aligrudi/fbpdf">Fbpdf</a>.
+
+<p>
+<b>RECENT CHANGES AND COMMENTS</b>
+
+<ul>
+<li>Jun 2024: <a href="https://github.com/aligrudi/neatvi">Neatvi</a>'s new features:
+normal mode quick access, extended registers, ex command history, and
+rs and rx commands for ex scripts.
+</li>
+<li>May 2023: Tag commands like :tag, :tnext, :tprev, :pop has been added to
+<a href="https://github.com/aligrudi/neatvi">Neatvi</a>.
+</li>
+<li>May 2023: <a href="https://github.com/aligrudi/neatvi">Neatvi</a> now supports gf normal mode
+command to edit the file whose path is under the cursor.  Now one can
+execute "git ls-files >ls" and then "vi ls" to use Neatvi as a file explorer.
+</li>
+<li>Apr 2023: <a href="https://github.com/aligrudi/neatmail">Neatmail</a> commands now
+support multi-mbox mailboxes (a main mbox and many archival or pruned mboxes).
+</li>
+<li>Feb 2023: Uwe Klatt has added VNC password authentication and touchscreen
+support in his Fbvnc fork (<a href="https://github.com/uklatt/fbvnc">link</a>).
+</li>
+<li>Aug 2022: <a href="https://github.com/aligrudi/fbpad">Fbpad</a> has a new command m-;.
+It executes a shell for the current terminal, but unlike m-c, sends SIGUSR1
+when switching to another terminal and sends SIGUSR2 when switching back.
+These signals are used in Fbvnc and Fbff to disable drawing when their
+terminal is not visible.  For these to work, the shell must ignore these
+signals.
+</li>
+<li>Nov 2021: <a href="./fbpad.mkv">A demo</a> of <a href="https://github.com/aligrudi/fbpad">Fbpad</a>
+tag splitting and switching.
+</li>
+<li>Oct 2021: <a href="https://github.com/aligrudi/fbpad">Fbpad</a> can now show the terminals
+of each tag side-by-side with the new split command.  Also, it defines the FBDEV
+environment variable to specify the drawing region of each terminal; fbpdf,
+fbvnc, and fbff read this variable.
+</li>
+<li>Oct 2021: I consider <a href="https://terminal-wg.pages.freedesktop.org/bidi/">this</a>
+proposal for BiDi text in terminal emulators a huge mistake.  Rendering text is not
+what the terminal should do, and making that the default behaviour is simply
+a short-sighted decision.  A terminal is not a typesetter, and trying to define
+paragraphs in its output, for instance, is absurd.
+I hope no other terminal emulator adopts it.
+</li>
+<li>Dec 2020: Kyryl Melekhin has implemented many interesting features in
+his Neatvi fork (<a href="https://github.com/kyx0r/neatvi">link</a>).
+</li>
+<li>Mar 2020: <a href="https://github.com/aligrudi/neatpost">Neatpost</a> now supports Unicode
+bookmarks and document information fields (see -mpost at neatroff_make/tmac/tmac.post).
+</li>
+<li>Mar 2020: Merged David Steinberg's framebuffer rotation patch to the rotation branch
+of <a href="https://github.com/aligrudi/fbpad">fbpad</a>.
+</li>
+<li>Jun 2019: Gregory Haerr has ported fbpdf and fbff to Microwindows
+(<a href="https://github.com/ghaerr/fbpdf">ported fbpdf</a> and <a href="https://github.com/ghaerr/fbff">fbff</a>).
+</li>
+<li>Apr 2018: An experimental Neatroff PDF post-processor is included
+in <a href="https://github.com/aligrudi/neatpost">Neatpost</a>.
+</li>
+<li>Mar 2018: <a href="https://github.com/aligrudi/neatroff">Neatroff</a>
+now supports .shift, .lsm, and \$^.
+</li>
+<li>Nov 2017: I have merged the dir branch of <a href="https://github.com/aligrudi/neatroff">Neatroff</a>
+into the master after more than four years.  Please report possible regressions.
+</li>
+<li>Nov 2017: <a href="https://github.com/aligrudi/neatrefer">Neatrefer</a>
+can now use author-year citation style.
+</li>
+<li>Oct 2017: <a href="https://github.com/aligrudi/neatpost">Neatpost</a>
+now supports pdfmark links.
+To create links and bookmarks in Neatroff, use -mps macro package;
+for more information have a look at its macros
+(<a href="https://github.com/aligrudi/neatroff_make">neatroff_make</a>/tmac/tmac.ps).
+</li>
+<li>Aug 2017: Added <a href="https://github.com/aligrudi/tsvm">tsvm</a>,
+a simple virtual machine for TSLANG IR for an undergraduate
+compiler course.
+</li>
+<li>Aug 2017: Added -mgr macro package to neatroff_make for creating
+simple graphs.
+</li>
+<li>Aug 2017: The roff source of Neatroff documentation is
+included in the demo directory of neatroff_make.
+</li>
+<li>Aug 2017: Neatroff_make now uses urw-core35 fonts by default.
+</li>
+<li>Aug 2017: Neatmkfn reads the CFF table of OpenType fonts.
+</li>
+<li>Jun 2017: Virtual terminals should never change the position
+of characters on the screen for reasons like rendering
+bidirectional text (sadly done in terminals like Konsole).
+</li>
+<li>Jun 2017: Uploaded <a href="https://github.com/aligrudi/dblp">dblp</a>
+to convert dblp.org search results to refer records.
+</li>
+<li>May 2017: Neatroff supports blank line macro request (.blm).
+</li>
+<li>Mar 2017: Added -c option to Neateqn to specify at which characters equations
+should be split, which may greatly improve eqn's syntax.  The
+option is explained in the "Adjusting the Syntax" section of
+<a href="./neateqn.pdf">Neateqn Introduction</a>.
+</li>
+<li>Mar 2017: Uploaded a large <a href="./neateqndemo.pdf">Neateqn sample</a>.
+</li>
+<li>Jan 2017: Added the .ffsc request to Neatroff, to specify the active
+script for each font (an OpenType font may support several scripts).
+</li>
+<li>Dec 2016: I am writing a Neatroff package for Farsi theses
+(<a href="https://github.com/nit-ce/neatroff_ths/">ths</a>).
+</li>
+<li>Dec 2016: The standalone branch of neatroff_make is merged into the master.
+</li>
+<li>Dec 2016: Neatroff and neatmkfn now support OpenType mark-to-base positioning rules.
+</li>
+<li>Dec 2016: Uploaded a neatroff macro package (<a href="./pt.tmac">pt.tmac</a>)
+to create simple two-dimensional figures
+(used for the figures in <a href="http://nit.rudi.ir/ct11.pdf">this</a>).
+</li>
+<li>Nov 2016: Added a few helper macros to <a href="https://github.com/aligrudi/neatroff_make">neatroff_make</a>;
+-mtbl for drawing simple tables (without the tbl preprocessor),
+-mkeep for managing floating objects, -mfa for Farsi manuscript.
+</li>
+<li>Oct 2016: Uploaded a small programming contest judge named <a href="https://github.com/aligrudi/chth">chth</a>.
+</li>
+<li>Sep 2016: Stretchable no-break space (\~) is supported in neatroff.
+</li>
+<li>Aug 2016: Neatcc's global register allocation is enhanced
+to allow allocating multiple registers to a local and
+allocating a register to multiple locals.
+</li>
+<li>Jul 2016: Neatroff now supports Groff-like .tkf request for tracking
+(adjusting letter-spacing).
+</li>
+<li>Jun 2016: In Neatroff, the edges of polygons (\D'p ..') can
+now be lines, arcs, or splines.
+</li>
+<li>May 2016: Uploaded a <a href="./fbpad_rot180.diff">patch</a> to rotate the output
+of fbpad 180 degrees.
+</li>
+<li>Apr 2016: <a href="https://github.com/aligrudi/neatcc">Neatcc</a> is
+updated to include intermediate code optimisations
+and cleaner intermediate and final code generation.
+<a href="./neatcc.pdf">Neatcc Introduction</a> is updated accordingly.
+The old two-pass compilation is available in noic branch.
+</li>
+<li>Apr 2016: <a href="https://github.com/aligrudi/neatcc_make">Neatcc_make</a>
+includes a makefile to obtain and build Neatcc,
+Neatld, and Neatlibc.
+</li>
+<li>Mar 2016: A new section in <a href="./neatstart.pdf">Getting Started with Neatroff</a>
+describes how to use Neatroff without installing it.
+</li>
+<li>Feb 2016: Neatvi now highlights neatmail listings.
+</li>
+<li>Feb 2016: I use <a href="./m">this</a> wrapper script for neatmail.
+</li>
+<li>Jan 2016: I have uploaded <a href="http://repo.or.cz/fbpad_mkfn.git">fbpad_mkfn</a>,
+a replacement for ft2tf, for generating fbpad font files.  It
+can use either stb truetype header or freetype library.
+</li>
+<li>Jan 2016: <a href="https://github.com/aligrudi/neatrefer">Neatrefer</a> now
+supports "\*[cite label]" citations and replaces them
+with "\*[cite refno]", in which refno is the reference number
+of the entry with the given label.
+</li>
+<li>Jan 2016: <a href="http://repo.or.cz/pop3.git">pop3</a> and
+<a href="http://repo.or.cz/smtp.git">smtp</a> can now use
+either mbedtls (polarssl) or openssl.
+</li>
+<li>Dec 2015: I am writing <a href="https://github.com/aligrudi/neatmail">Neatmail</a>,
+my new mail client.
+</li>
+<li>Dec 2015: Neatcc may be changed to adopt a new intermediate code.
+</li>
+<li>Nov 2015: Note that Neatvi can use terminal 256-colour
+palette if available, as specified in this <a href="neatvi_conf.h">conf.h</a>.
+</li>
+<li>Jul 2015: Uploaded <a href="./dnsred.tar.gz">dnsred</a> to redirect DNS
+queries to other UDP/TCP DNS servers; it is very simple but
+could be easily extended to support simultaneous queries and
+caching.
+</li>
+<li>Jun 2015: Added breakcost command to Neateqn to specify line-break
+cost after top-level operators; <a href="./neateqn.pdf">Neateqn Introduction</a>
+includes more details.
+</li>
+<li>May 2015: I am writing <a href="https://github.com/aligrudi/neatvi">Neatvi</a>,
+a vi/ex editor for editing bidirectional utf-8 files.
+</li>
+<li>Mar 2015: After more than two years I have updated fbff: now it
+features more accurate seeking commands and vi-like marks, as
+in minmad.
+</li>
+<li>Mar 2015: Neateqn can now break long equations after binary and
+relational symbols.
+</li>
+<li>Jan 2015: <a href="https://github.com/aligrudi/neatroff_make">Neatroff_make</a> now
+includes manual pages for neatroff and its helper programs (contributed
+by Larry Kollar).
+</li>
+<li>Jan 2015: Uploaded <a href="./neatstart.pdf">Getting Started with Neatroff</a>.
+</li>
+<li>Dec 2014: Uploaded a <a href="./neateqn.pdf">Neateqn Introduction</a>.
+</li>
+<li>Oct 2014: To make setting up Neatroff easier, I have
+uploaded <a href="https://github.com/aligrudi/neatroff_make">neatroff_make</a>,
+which contains a top-level makefile to obtain, build, and install
+Neatroff and its pre- and post-processors.  Carsten Kunze
+suggested it originally and helped to port it to common Unix environments.
+</li>
+<li>Sep 2014: Many of the incompatibilities of Neatroff are
+fixed; most of the credit goes to
+Carsten Kunze and Dirk-Wilhelm Peters for finding them.
+</li>
+<li>Apr 2014: Now Neateqn uses Computer Modern glyphs for brackets
+and radicals if they are available (see Neateqn's README).
+</li>
+<li>Feb 2014: Uploaded version 0.9 of ft2tf, which allows specifying
+distinct horizontal and vertical DPIs.
+</li>
+<li>Nov 2013: A new program has been added to tdq to import Arpabet
+pronunciations after converting them to IPA.
+</li>
+<li>Sep 2013: After about two years, I have merged fbpad's 256 colour
+palette.  Now the bold
+branch is almost identical to the master branch and is removed.
+</li>
+<li>Aug 2013: When a program is specified via command line
+arguments, fbpad starts the given program, disables terminal
+switching commands, and exits when the program finishes.
+I have also merged the scrolling history patch from the bold
+branch and uploaded version 0.8 of ft2tf, which supports
+full-width characters and emboldening fonts.
+</li>
+<li>Apr 2013: A command was added to fbpdf to override
+page numbers; useful especially for documents that start with
+roman-numbered pages.
+</li>
+<li>Mar 2013: I included Jörg Reinhard's patch to support mousewheel
+in fbvnc.  I also included a patch to move the viewing
+screen for large VNC framebuffers.
+</li>
+<li>Feb 2013: I added fbvis to view images on the framebuffer.
+</li>
+<li>Feb 2013: When paused, minmad and fbff now close the OSS device
+to permit other programs to open it.
+</li>
+<li>Feb 2013: Fullwidth characters are now handled correctly in
+fbpad; Felix Janda tested the changes and prepared a preliminary patch.
+</li>
+<li>Jan 2013: Many of my framebuffer programs define a FB_VAL() macro
+as an alias for fb_val() function.
+The macro can be redefined for speed (should help especially
+fbpdf, fbvis and cnoor).  On 32-bit RGB framebuffers, for instance,
+it can be redefined as "(((r) << 16) | ((g) << 8) | (b))".
+</li>
+</ul>
+<!--
+<ul>
+<li>Sep 2015: Uploaded a new version of <a href="./pdftxt-0.5.tar.gz">pdftxt</a>
+to work with mupdf-1.7a (patch contributed by Laura Michaels).
+</li>
+<li>Jul 2016: Neatcc now uses a new register allocation algorithm.
+</li>
+<li>Feb 2015: The bifont branch of fbpad (which supports switching between
+two sets of fonts) implements a new tag summary.
+</li>
+<li>Jan 2015: Uploaded new versions of <a href="minmix-0.3.tar.gz">minmix</a> and
+<a href="./pdftxt-0.4.tar.gz">pdftxt</a>.
+</li>
+<li>Dec 2014: Two new commands are added to neateqn to adjust the default
+brackets or define new ones (bracketsizes and bracketpieces).
+These commands specify glyphs for different sizes of brackets and
+glyphs for building brackets.
+</li>
+<li>Nov 2014: The new .eos request of neatroff can override sentence ending
+characters (.?! by default) and characters ignored after them ('")]* by default).
+</li>
+<li>Oct 2014: A new request is added to specify the minimum
+line length of the last lines of paragraphs (.pmll) and the meaning
+of the argument of .hycost request for specifying hyphenation
+cost is changed.  For
+more information, read the <a href="./neatroff.pdf">neatroff introduction</a>.
+</li>
+<li>Aug 2014: Neatroff now supports advanced font features
+available in modern fonts; the .ff request enables or disables
+features of a font (for instance, .ff FN +f1 -f2 to enable feature
+f1 and disable feature f2 of font FN).
+Also neatmkfn has been extended to read TTF fonts directly; this
+was necessary for extracting information about font features for
+neatroff (OTF files should be converted to TTF first).
+</li>
+<li>Jul 2014: Neatroff through neatpost supports \X'rotate deg' for
+rotating the current page and \X'eps file [width [height]]' for
+including EPS files.  Also -meps has been added to neatroff's
+data package, defining the EPS macro for including EPS files.
+</li>
+<li>Jul 2014: Neatroff now supports utf-8 hyphenation
+patterns (.hpf, .hpfa, and .hcode requests).
+Also mktrfn was renamed to neatmkfn.
+</li>
+<li>Jun 2014: Neatroff supports conditional interpolation with
+\?'cond@expr1@expr2@' escape sequence.  More information
+is included in <a href="./neatroff.pdf">neatroff introduction</a>.
+</li>
+<li>May 2014: Neatroff can now format whole paragraphs at once to
+obtain paragraphs with more uniform spacing.  Also now it is
+possible to specify the hyphenation penalty (.hycost), the amount of
+sentence space (the second argument of .ss),
+and the amount by which spaces in a line may
+be shrunk while filling (.ssh).
+</li>
+<li>Jun 2014: Uploaded version 0.3 of
+<a href="./neatroff_dat-0.3.tar.gz">neatroff data package</a>.
+</li>
+<li>Apr 2014: Added a <a href="./neatcc.sh">script</a> to fetch, compile, and
+set up neatcc, neatld, and neatlibc.
+</li>
+<li>Apr 2014: Uploaded version 0.4 of <a href="./mktrfn-0.4.tar.gz">mktrfn</a>.
+</li>
+<li>Apr 2014: I have renamed my small refer clone to
+<a href="https://github.com/aligrudi/neatrefer">neatrefer</a>.
+</li>
+<li>Mar 2014: Neateqn seems stable now.  Updated
+<a href="./neatroff.sh">neatroff build script</a> to fetch and compile neateqn too.
+</li>
+<li>Mar 2014: Neatroff now reports the bounding box of \w
+argument via bbllx, bblly, bburx, and bbury number registers
+(added while working on neateqn).
+</li>
+<li>Jan 2014: Added a <a href="./neatroff.sh">script</a> to fetch, compile,
+and set up neatroff and neatpost.  Read its comments
+for more information.
+</li>
+<li>Jan 2014: Added a new command to fbpdf to set the default zoom
+level.  Also, fbdjvu now supports rotation.
+</li>
+<li>Nov 2013: I have revised neatroff's font description format.
+While remaining backward compatible with the original troff,
+neatroff now supports lines starting with the token "char"
+to define characters and lines starting with "kern" to define
+kerning pairs; mktrfn has also been updated to use the new
+syntax.
+</li>
+<li>Nov 2013: I have updated mktrfn program to create separate troff
+fonts for the specified OpenType font features for neatroff.
+Also the new .fmap request (.fmap fontname char_name glyph_name)
+can be used the change the glyph mapped to a character or define
+a new mapping.
+</li>
+<li>Oct 2013: Added .char, .chop, and .fspecial requests to neatroff.
+</li>
+<li>Sep 2013: The mktrfn program now includes a script to create
+an output device for neatroff.
+</li>
+<li>Jul 2013: Now I use neatroff and neatpost for typesetting.
+</li>
+<li>May 2013: Improved fbvis' fit to page width and height.
+</li>
+<li>Aug 2013: My Arabic/Farsi letter shaping preprocessor now
+handles Arabic diacritics; see <a href="./dir.html">here</a>.
+</li>
+<li>Apr 2013: After merging neatcc architectures by the end
+of 2011, I have been using neatcc daily, and surprisingly,
+I have not yet encountered a runtime bug in neatcc since then.
+Note that neatcc is, partly intentionally to keep the parser
+neater, very lax about compilation errors but for valid
+C code, I am inclined to think that neatcc is very stable.
+I am no longer dismayed at the sad route GCC is taking.
+</li>
+</ul>
+-->
+
+<h2>TYPESETTING</h2>
+<p>
+For a guide to set up Neatroff, see <a href="neatstart.pdf">getting started with Neatroff</a>.
+For the list of features and new requests,
+see <a href="neatroff.pdf">Neatroff introduction</a>.
+
+<ul>
+<li>A new Troff implementation <a href="https://github.com/aligrudi/neatroff">Neatroff</a>
+and its PostScript/PDF post-processor <a href="https://github.com/aligrudi/neatpost">Neatpost</a>;
+Neatroff supports utf-8 encoding, named environments,
+long register and macro names,
+advanced font features present in OpenType fonts,
+paragraph-at-once line formatting, and bidirectional text rendering.
+<a href="./neatfarsi.pdf">Here</a>'s a short introduction and
+<a href="./neatfbeg.pdf">here</a>'s a brief
+guide for getting started, both in Farsi.
+</li>
+<li><a href="https://github.com/aligrudi/neateqn">Neateqn</a> is
+an eqn preprocessor for Neatroff, which addresses some of
+the shortcomings and problems of the original eqn.  It implements
+most of the extensions introduced by Groff's eqn.
+Here is a brief <a href="./neateqn.pdf">Neateqn introduction</a>.
+</li>
+<li><a href="https://github.com/aligrudi/neatrefer">Neatrefer</a> is a small and slightly
+incompatible refer clone.  Also <a href="bib2ref-0.1.tar.gz">bib2ref</a> converts
+bibtex files to refer databases and <a href="ref2bib-0.1.tar.gz">ref2bib</a> does the reverse.
+</li>
+<li><a href="http://repo.or.cz/troff.git">Here</a>'s the port of Plan 9 Troff (troff, tr2ps,
+eqn, tbl, pic, and grap) to Linux.
+The preprocessors and the macro packages can be used with Neatroff also.
+</li>
+<li><a href="https://github.com/aligrudi/neatmkfn">Neatmkfn</a> can create Neatroff
+font descriptions from AFM, TTF, and OTF files.
+It extracts the details of advanced font features
+present in OpenType fonts to be used inside Neatroff.
+</li>
+<li>To make setting up Neatroff easier,
+<a href="https://github.com/aligrudi/neatroff_make">neatroff_make</a>
+obtains, builds, and installs
+Neatroff and its pre- and post-processors.  It also contains
+a set of standard troff macros from Plan 9.
+</li>
+<li><a href="https://github.com/aligrudi/neatvi">Neatvi</a> is
+a vi/ex editor for editing bidirectional utf-8 files.
+</li>
+</ul>
+
+<h2>FRAMEBUFFER</h2>
+<p>
+I no longer use X11.
+
+<ul>
+<li><a href="https://github.com/aligrudi/fbpdf">Fbpdf</a>, a linux framebuffer PDF,
+XPS, EPUB, and CBZ viewer using <a href="http://mupdf.com/">mupdf</a>
+library.  It can also use libpoppler for PDF and can view DJVU files via
+libdjvulibre.
+</li>
+<li><a href="http://repo.or.cz/fbvnc.git">Fbvnc</a>, a small framebuffer vnc viewer;
+Jörg Reinhard added German keyboard support, available
+<a href="http://finalmedia.de/code">here</a>, and
+<a href="http://doc.slitaz.org/en:guides:pxe">SliTaz</a> uses this
+<a href="http://hg.slitaz.org/wok-tiny/raw-file/tip/fbvnc/stuff/fbvnc.u">patch</a>.
+</li>
+<li><a href="https://github.com/aligrudi/fbff">Fbff</a>, an ffmpeg-based linux
+framebuffer media player.  The libmpeg3 branch uses libmpeg3 instead
+of ffmpeg.
+</li>
+<li><a href="https://github.com/aligrudi/fbpad">Fbpad</a>, a small linux framebuffer
+virtual terminal.  It manages many terminals through single-letter tags.
+The <a href="http://repo.or.cz/fbpad_mkfn.git">fbpad_mkfn</a> program
+can generate fbpad font files (for testing, you can try Courier <a href="./courr.tf">regular</a>,
+<a href="./couri.tf">italic</a> and <a href="./courb.tf">bold</a> tinyfonts).
+Here are a few screen shots with <a href="./fbpad2.png">Ubuntu monospaced</a>,
+<a href="./fbpad0.png">Ubuntu monospaced</a>, and <a href="./fbpad1.png">Monofur</a>.
+Archwiki has a nice but out-of-date <a href="https://wiki.archlinux.org/index.php/Fbpad">introduction</a>.
+</li>
+<li><a href="http://repo.or.cz/fbvis.git">Fbvis</a> is a framebuffer image viewer;
+includes <a href="http://nothings.org/stb_image.c">stbi</a> and
+<a href="http://lodev.org/lodepng">lodepng</a>
+and does not depend on external image libraries.
+</li>
+<li><a href="http://repo.or.cz/cnoor.git">Cnoor</a> to read the holy Quran on
+linux framebuffer.
+</li>
+</ul>
+
+<h2>PROGRAMMING</h2>
+<p>
+Many of the programs in this page can be compiled with Neatcc.
+<!--
+(using <a href="neatcc.c">neatcc.c</a> wrapper for neatcc, neatlibc, and neatld)
+or with neatcc and musllibc/dietlibc.
+This <a href="./neatcc.sh">script</a> fetches, compiles, and sets up
+neatcc, neatld, and neatlibc.
+-->
+
+<ul>
+<li><a href="https://github.com/aligrudi/neatcc">Neatcc</a> is a small ARM/X86(_64) C compiler;
+<a href="./neatcc.pdf">here</a>'s a brief introduction, which also describes how to set up Neatcc.
+</li>
+<li><a href="https://github.com/aligrudi/neatld">Neatld</a> is a simple ARM/X86(_64) static linker.
+</li>
+<li><a href="http://repo.or.cz/neatas.git">Neatas</a> is an ARM assembler; note
+that Neatcc does not need an assembler, as it generates machine code directly.
+</li>
+<li><a href="https://github.com/aligrudi/neatlibc">Neatlibc</a> is a very small ARM/X86(_64) libc
+written mainly to bootstrap neat*; I wish to find the time to clean it up
+and implement its missing functions.
+</li>
+<li><a href="https://github.com/aligrudi/neatcc_make">Neatcc_make</a> includes a top-level
+makefile to obtain and build Neatcc, Neatld, and Neatlibc.  It also contains
+Neatcc's testsuite, and also, Neatdbg to show ELF core file backtrace and to
+find ELF symbols near a virtual address.
+</li>
+</ul>
+
+<h2>OTHERS</h2>
+<ul>
+<li><a href="https://github.com/aligrudi/neatmail">Neatmail</a> is my new mail
+client (<a href="https://linuxfr.org/users/sygne/journaux/neatmail-un-client-mail-minimaliste">here</a>'s a nice introduction in French).
+</li>
+<li><a href="./dnsred.tar.gz">Dnsred</a> redirects DNS queries to other UDP/TCP DNS servers.
+</li>
+<li><a href="./tdq-0.2.tar.gz">Tdq</a>, a fast dictionary lookup program (xdxf and stardict
+files can be imported).
+</li>
+<li><a href="./pdftxt-0.7.tar.gz">Pdftxt</a> uses mupdf to extract text from pdf files;
+prefixes each line with its page number for searching.
+</li>
+<li><a href="https://github.com/aligrudi/dblp">Dblp</a>
+to convert dblp.org search results to refer records.
+</li>
+<li><a href="http://repo.or.cz/rangi.git">Rangi</a> to detect coloured graph motifs;
+more information available <a href="./rangi.html">here</a>.
+</li>
+<li><a href="http://repo.or.cz/minmad.git">Minmad</a> to play mp3 files using OSS/libmad.
+Its alsa branch uses alsa instead of OSS, and its minimp3 branch uses
+minimp3 instead of libmad.
+</li>
+<li><a href="https://github.com/aligrudi/minmix">Minmix</a> is a small OSS mixer.
+</li>
+<li>The <a href="./ram.tar.gz">repeat after me</a> typing exercise.
+</li>
+<li><a href="https://github.com/aligrudi/chth">Chth</a>
+is a small programming contest judge for "Challenging Thursdays".
+</li>
+<li>A <a href="http://github.com/aligrudi/neatpop3">POP3 client</a>; appends mails to
+different mbox files based on the specified rules.
+</li>
+<li>A <a href="github.com/aligrudi/neatsmtp">SMTP client</a>.
+</li>
+<li><a href="http://repo.or.cz/ctxt.git">ctxt</a> to write formatted documents
+(including this page).
+</li>
+<li>A small utf-8 <a href="./fmt.tar.gz">unix fmt(1) clone</a> (not completely compatible though).
+</li>
+<li><a href="./ethcat.tar.gz">Ethcat</a> is my tcpdump/tcpreplay replacement
+</li>
+<li>I started <a href="http://github.com/python-rope/rope/">Rope</a> (a python refactoring library)
+in 2006; it is now maintained by Lie Ryan.
+</li>
+</ul>
+<!--
+<ul>
+<li>My old <a href="http://repo.or.cz/mailx.git">mailx clone</a> and
+<a href="./pg.tar.gz">mailpg</a>, a mail pager.
+</li>
+<li><a href="./nref.tar.gz">Nref</a> manages document references; it can be used as
+a Troff preprocessor.
+</li>
+<li>A simple <a href="./socks.tar.gz">socks v5 server</a> (no tcp bind).
+</li>
+<li><a href="llx.tar.gz">Llx</a> reads commands from standard input and executes
+them in parallel with an optional maximum concurrent processes limit.
+</li>
+<li><a href="./dc16.tar.gz">Dc16</a>, a trivial stack-based calculator supporting
+0x1f style hex numbers; handy when doing hex calculations.
+</li>
+<li>A simple <a href="./hexcat.tar.gz">hex file viewer</a>.
+</li>
+</ul>
+-->
+
+<h2>QUESTIONS</h2>
+<p>
+For questions or feedback,
+write to Ali Gholami Rudi (ali at rudi dot ir);
+I would be delighted to receive them.
+
+</body>
+</html>
